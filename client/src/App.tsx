@@ -1,24 +1,20 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
+import Home from "./pages/Home";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 function App() {
-  const [data, setData] = useState<string>('')
-
-  async function fetchData() {
-    try {
-      const response = await fetch('http://localhost:3000/api/data');
-      const data = await response.json();
-      setData(data.data);
-    } catch (error) {
-      console.error("Error fetching data:", error)
-    }
-  }
-
   return (
     <>
-      <div>
-        <button onClick={fetchData}>Fetch Message</button>
-        <p>Data : {data ? data : "No Data"}</p>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/signUp' element={<SignUp />} />
+          <Route path='/signIn' element={<SignIn />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
