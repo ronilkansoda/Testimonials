@@ -1,8 +1,10 @@
 import express from "express";
 import cors from "cors";
-import UserRoutes from "./routes/userRoutes.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
+import UserRoutes from "./routes/UserRoutes.js"
+import YtLinksRoutes from "./routes/YtLinksRoutes.js"
 
 // Defining the requirements
 const app = express();
@@ -20,7 +22,8 @@ mongoose.connect(process.env.MONGO_URL)
 
 
 // Routes
-app.use('/api', UserRoutes);
+app.use('/user', UserRoutes);
+app.use('/ytLinks', YtLinksRoutes);
 
 
 app.listen(3000, () => {
