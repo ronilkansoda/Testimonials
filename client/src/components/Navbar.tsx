@@ -1,8 +1,8 @@
 
 export default function Navbar() {
     return (
-        <nav className="bg-gradient-to-br bg-opacity-10 from-indigo-900 to-indigo-500">
-            <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+        <nav className="bg-transparent">
+            <div className="w-full flex items-center justify-between mx-auto p-4">
                 <a href="/" className="flex items-center space-x-3">
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Testimonials</span>
                 </a>
