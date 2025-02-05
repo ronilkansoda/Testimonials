@@ -19,6 +19,7 @@ export default function SignIn() {
         // console.log(formData)
         try {
             setLoading(true);
+            setError("");
             const res = await fetch("http://localhost:3000/user/signIn", {
                 method: 'POST',
                 // it tell the server that the request body contains JSON data
