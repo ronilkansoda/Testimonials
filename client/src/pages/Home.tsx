@@ -1,11 +1,12 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import ImageAb from "../assets/abstract2.png";
+import ImageAb from "../assets/abstract.jpg";
 
 export default function MyComponent() {
     const [url, setUrl] = useState<any>(null);
     const [inputData, setInputData] = useState({});
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<String>("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         setInputData({ ...inputData, [e.target.id]: e.target.value });
@@ -15,6 +16,7 @@ export default function MyComponent() {
         e.preventDefault();
         setLoading(true);
         setUrl(null);
+        setError("");
 
         try {
             const res = await fetch("http://localhost:3000/ytLinks/links", {
@@ -24,8 +26,13 @@ export default function MyComponent() {
             });
 
             const data = await res.json();
+            if (data.error) {
+                setError(data.error);
+                return;
+            }
             setUrl(data);
         } catch (error) {
+            setError("Server Error");
             console.error("ERROR: " + error);
         } finally {
             setLoading(false);
@@ -34,6 +41,7 @@ export default function MyComponent() {
 
     useEffect(() => {
         console.log(url);
+
     }, [url]);
 
     const handleDownload = async (sourceUrl: string, type: "audio" | "video") => {
@@ -45,7 +53,7 @@ export default function MyComponent() {
         try {
             if (type === "video") {
                 // Fetch video file
-                const response = await fetch(`http://localhost:3000/ytLinks/download/${type}?source=${encodeURIComponent(sourceUrl)}`); //ensures special characters in the URL (like ? or &) don’t break the request.
+                const response = await fetch(`http://localhost:3000/ytLinks/download/${type}?source=${encodeURIComponent(sourceUrl)}&filename=${url.title}`); //ensures special characters in the URL (like ? or &) don’t break the request.
 
                 if (!response.ok) {
                     throw new Error("Failed to download file");
@@ -80,89 +88,20 @@ export default function MyComponent() {
     };
     return (
         <>
-            {/* <Navbar /> */}
-            {/* <form onSubmit={handleSubmit}>
-                <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
-                    
-                    <div className="flex space-x-2">
-                        <input
-                            id="url"
-                            type="text"
-                            onChange={handleChange}
-                            placeholder="Enter YouTube URL"
-                            className="mt-4 p-2 w-full max-w-[350px] border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
-
-                 
-                    <button
-                        type="submit"
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-                        disabled={loading}
-                    >
-                        {loading ? "Processing..." : "Submit"}
-                    </button>
-
-                    {loading && (
-                        <div className="mt-4">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                        </div>
-                    )}
-
-                    {url && url.title && (
-                        <div className="mt-6 text-center">
-                            <img src={url.thumbnailUrl} alt="Video Thumbnail" className="w-64 rounded-lg shadow-lg mx-auto" />
-
-                            <h2 className="text-lg font-semibold mt-2">{url.title}</h2>
-
-                            
-                            <div className="mt-4 text-blue-600">
-                                {url.downloadUrlAud && (
-                                    <p>
-                                        <strong>Audio (MP3):</strong>{" "}
-                                        <button
-                                            // onClick={() => forceDownload(url.downloadUrlAud, "audio.mp3")}
-                                            onClick={() => handleDownload(url.downloadUrlAud, "audio")}
-                                            className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-                                        >
-                                            Download MP3
-                                        </button>
-                                    </p>
-                                )}
-
-                                {url.downloadUrlVid && (
-                                    <p className="mt-2">
-                                        <strong>Video (MP4):</strong>{" "}
-                                        <button
-                                            onClick={() => handleDownload(url.downloadUrlVid, "video")}
-                                            className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-                                        >
-                                            Download MP4
-                                        </button>
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </form> */}
-
-
             <div className="relative w-full  h-screen overflow-hidden">
                 <Navbar />
                 <div className="absolute inset-0 -z-10 w-full h-full ">
-                    {/* <Myvideo /> */}
                     <img
                         src={ImageAb}
                         alt="abstract"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-center"
                     />
                 </div>
 
                 <div className="w-full  h-[75vh] flex justify-center items-center p-4">
                     <div className="w-full  lg:w-[700px] md:max-w-screen-md min-w-lg p-4 rounded-md">
                         <form onSubmit={handleSubmit}>
-                            <div className="border-8 border-gray-700/25  rounded-xl flex drop-shadow-2xl shadow-cyan-500">
+                            <div className="border-8 border-gray-700/40 rounded-xl flex drop-shadow-2xl shadow-cyan-500">
                                 <button
                                     className="flex items-center justify-center backdrop-blur-2xl bg-opacity-60 bg-gray-800 rounded-l-md px-4 py-2"
                                     type="submit"
@@ -178,7 +117,7 @@ export default function MyComponent() {
                                     </svg>
                                 </button>
                                 <input
-                                    className="w-full py-3 focus:outline-none rounded-r-md backdrop-blur-2xl bg-gray-800/50  text-sm text-white px-3"
+                                    className="w-full py-3 focus:outline-none rounded-r-md backdrop-blur-2xl bg-gray-800/50 text-sm text-gray-50 px-3"
                                     type="text"
                                     id="url"
                                     onChange={handleChange}
@@ -187,86 +126,91 @@ export default function MyComponent() {
                             </div>
                         </form>
 
-                        <div className="fade-in w-full  mt-4 rounded-md backdrop-blur-2xl bg-gray-800/50  text-sm ">
+                        {loading && (
+                            <div className="w-full flex justify-center items-center mt-4 py-6 rounded-md bg-gray-800/50 text-sm ">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-gray-100"></div>
+                            </div>
+                        )}
 
-                            {loading && (
-                                <div className="w-full h-40 flex justify-center items-center mt-4 rounded-md bg-gray-800/50 text-sm ">
-                                    <div className="animate-spin rounded-full h-12 w-12 border-b-8 border-gray-100"></div>
+                        {error && (
+                            <div className="w-full flex justify-center items-center mt-4 py-5 rounded-md bg-gray-800/50 text-lg text-red-400 font-medium">
+                                {error}
+                            </div>
+                        )}
+
+
+                        {url && url.title && (
+                            <div className="fade-in w-full mt-4 rounded-md backdrop-blur-2xl  bg-gray-800/50 border-8 border-gray-700/5 text-sm ">
+
+                                <div className="inline-block p-3 text-gray-200 text-lg space-x-4">
+                                    <h1 className="line-clamp px-10 text-2xl   font-normal">
+                                        Title : {url.title}
+                                    </h1>
                                 </div>
-                            )}
 
-                            {url && url.title && (
-                                <>
+                                <div className="w-full flex justify-center">
+                                    <img
+                                        className="object-fit"
+                                        width="35%"
+                                        height="100vh"
+                                        src={url.thumbnailUrl}
+                                        alt="thumbnale"
+                                    />
+                                </div>
 
-                                    <div className="inline-block p-3 text-gray-200 text-lg space-x-4 ">
-                                        <h1 className="line-clamp px-10 text-2xl   font-normal">
-                                            Title : {url.title}
-                                        </h1>
-                                    </div>
-
-                                    <div className="w-full flex justify-center">
-                                        <img
-                                            className="object-fit"
-                                            width="35%"
-                                            height="100vh"
-                                            src={url.thumbnailUrl}
-                                            alt="thumbnale"
-                                        />
-                                    </div>
-
-                                    {url.downloadUrlVid && (
-                                        <div className="text-white font-semibold text-lg flex justify-between items-center px-10 py-3">
-                                            <p className="truncate">MP4</p>
-                                            <button className="px-6 py-3 bg-gray-900/60 hover:bg-gray-950/60 transition rounded-md"
-                                                onClick={() => handleDownload(url.downloadUrlVid, "video")}
+                                {url.downloadUrlVid && (
+                                    <div className="text-gray-200 font-semibold text-lg flex justify-between items-center px-10 py-3">
+                                        <p className="truncate">MP4 🎥</p>
+                                        <button className="px-6 py-3 bg-gray-900/60 hover:bg-gray-950/60 transition rounded-md"
+                                            onClick={() => handleDownload(url.downloadUrlVid, "video")}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth={1.5}
+                                                stroke="currentColor"
+                                                className="size-6"
                                             >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="size-6"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    )}
-                                    {url.downloadUrlAud && (
-                                        <div className="text-white font-semibold text-lg flex justify-between items-center px-10 py-3">
-                                            <p className="truncate">MP3</p>
-                                            <button className="px-6 py-3 bg-gray-900/60  hover:bg-gray-950/60 transition rounded-md"
-                                                onClick={() => handleDownload(url.downloadUrlAud, "audio")}>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="size-6"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    )}
-                                </>
-                            )}
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                )}
+                                {url.downloadUrlAud && (
+                                    <div className="text-gray-200 font-semibold text-lg flex justify-between items-center px-10 py-3">
+                                        <p className="truncate">MP3 🎧</p>
+                                        <button className="px-6 py-3 bg-gray-900/60 hover:bg-gray-950/60 transition rounded-md"
+                                            onClick={() => handleDownload(url.downloadUrlAud, "audio")}>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth={1.5}
+                                                stroke="currentColor"
+                                                className="size-6"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                )}
 
-
-                        </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div >
+
+
         </>
     );
 }

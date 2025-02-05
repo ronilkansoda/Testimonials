@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 @import "tailwindcss";
 
-:root {
-    /* background-color: yellow; */
-    font-family: "Roboto", serif;
-    font-weight: 200;
-    font-style: normal;
-}
+
+.roboto-condensed :root {
+    /* font-family: "Roboto Condensed", serif; */
+    font-family: "Rubik", serif;
+    font-optical-sizing: auto;
+  } 
