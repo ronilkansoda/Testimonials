@@ -1,17 +1,30 @@
 import Navbar from "../components/Navbar";
 import ImageAb from "../assets/abstract2.png";
+import { useState, useEffect } from "react";
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 3000);
+  }, []);
+
   return (
     <div className="relative w-full  h-screen overflow-hidden">
       <Navbar />
       <div className="absolute inset-0 -z-10 w-full h-full ">
         {/* <Myvideo /> */}
-        <img src={ImageAb} alt="abstract" className="w-full h-full object-cover" />
+        <img
+          src={ImageAb}
+          alt="abstract"
+          className="w-full h-full object-cover"
+        />
       </div>
 
-      <div className="w-full  h-[50vh] flex justify-center items-center p-4">
-        <div className="w-full  lg:w-[600px] min-w-lg p-4 rounded-md">
-          <div className="border-8 border-opacity-25 border-gray-700 rounded-md flex drop-shadow-2xl shadow-cyan-500">
+      <div className="w-full  h-[75vh] flex justify-center items-center p-4">
+        <div className="w-full  lg:w-[700px] md:max-w-screen-md min-w-lg p-4 rounded-md">
+          <div className="border-8 border-opacity-25 border-gray-700 rounded-xl flex drop-shadow-2xl shadow-cyan-500">
             <button
               type="button"
               className="flex items-center justify-center backdrop-blur-2xl bg-opacity-60 bg-gray-800 rounded-l-md px-4 py-2"
@@ -31,32 +44,75 @@ export default function Home() {
               placeholder="https://youtube.com"
             />
           </div>
-
-          <div className="w-full mt-4 rounded-md backdrop-blur-2xl bg-opacity-50 bg-gray-800 text-sm">
-            <div className="flex p-3 text-white text-lg space-x-4">
-              <p>Mp4</p>
-              <p>Mp3</p>
+          {/* /*loading div */}
+          {!loading ? (
+            <div className="w-full h-40 flex justify-center items-center mt-4 rounded-md backdrop-blur-2xl bg-opacity-50 bg-gray-800 text-sm">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-8 border-gray-100"></div>
             </div>
-            <div className="text-white font-semibold text-lg flex justify-between items-center px-4 py-4">
-              <p className="truncate">4K Video</p>
-              <button className="px-6 py-3 bg-gray-800 bg-opacity-60 rounded-md">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+          ) : (
+            // <details className="div-container text-transparent " open={loading}>
+              <div className="fade-in w-full  mt-4 rounded-md backdrop-blur-2xl bg-opacity-50 bg-gray-800 text-sm ">
+                <div className="inline-block p-3 text-gray-200 text-lg space-x-4 ">
+                  <h1 className="line-clamp px-10 text-2xl   font-normal">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Vel, placeat nihil? Magni saepe officiis quia amet eum autem
+                    blanditiis. Aut, quod aliquam cumque repudiandae iusto
+                    ullam! Cum magni dolorum explicabo in, quaerat excepturi
+                    sequi rerum, iusto ab iure odio eaque aut tempore
+                    consequatur necessitatibus ducimus commodi. Assumenda minima
+                    magni recusandae.
+                  </h1>
+                </div>
+                <div className="w-full flex justify-center">
+                  <img
+                    className="object-fit"
+                    width="35%"
+                    height="100vh"
+                    src="https://i.ytimg.com/vi/FWr_7RFkkpM/sddefault.jpg"
+                    alt="thumbnale"
                   />
-                </svg>
-              </button>
-            </div>
-          </div>
+                </div>
+                <div className="text-white font-semibold text-lg flex justify-between items-center px-10 py-3">
+                  <p className="truncate">4K Video</p>
+                  <button className="px-6 py-3 bg-gray-800 bg-opacity-60 rounded-md">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="text-white font-semibold text-lg flex justify-between items-center px-10 py-3">
+                  <p className="truncate">4K Video</p>
+                  <button className="px-6 py-3 bg-gray-800 bg-opacity-60 rounded-md">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            // </details>
+          )}
         </div>
       </div>
     </div>
