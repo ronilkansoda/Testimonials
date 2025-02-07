@@ -1,8 +1,9 @@
 import express from "express";
-import { Links } from "../controllers/YtLinksControllers.js";
+import { Links, downloadVid } from "../controllers/YtLinksControllers.js";
 
 const router = express.Router();
 
-router.get('/links', Links)
+router.post("/links", Links);
+router.get("/download/:type", downloadVid);
 
-export default router
+export default router;
