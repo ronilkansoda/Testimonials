@@ -26,14 +26,14 @@ mongoose.connect(process.env.MONGO_URL)
     });
 
 const limiter = rateLimit({
-    windowMs: 20 * 1000, // 15 minutes
-    max: 1, // Max 20 requests per window
-    message: { error: "Too many requests, please try again later." }
-})
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // Max 20 requests per window
+    error: "Too many requests, please try again later.",
+});
 
 // Routes
-app.use('/user', limiter, UserRoutes);
-app.use('/ytLinks', limiter, YtLinksRoutes);
+app.use('/user', UserRoutes, limiter);
+app.use('/ytLinks', YtLinksRoutes, limiter);
 
 
 app.listen(3000, () => {
