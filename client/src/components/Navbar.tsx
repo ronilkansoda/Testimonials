@@ -1,9 +1,6 @@
 
 export default function Navbar() {
     return (
-        // <nav className="bg-gradient-to-br from-gray-900/50 to-gray-300/50">
-        <nav className="">
-            <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
                 <a href="/" className="flex items-center space-x-3">
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Testimonials</span>
                 </a>
