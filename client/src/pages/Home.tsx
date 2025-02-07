@@ -10,6 +10,7 @@ export default function MyComponent() {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         setInputData({ ...inputData, [e.target.id]: e.target.value });
+        console.log(inputData)
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
