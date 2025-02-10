@@ -1,4 +1,4 @@
-import User from '../models/userModel.js';
+import User from '../models/UserModel.js';
 import bcrypt from 'bcryptjs';
 
 export const test = async (req, res) => {
@@ -17,10 +17,10 @@ export const SignUp = async (req, res) => {
         })
         res.status(201).json({ message: "User is Created Successfully" })
     } catch (error) {
-        if (error.errorResponse.keyValue.username) {
+        if (error?.errorResponse?.keyValue?.username) {
             res.status(409).json({ error: "Try Different Username" })
         }
-        else if (error.errorResponse.keyValue.email) {
+        else if (error?.errorResponse?.keyValue?.email) {
             res.status(409).json({ error: "Try Different Email" })
         }
         console.log(error)
