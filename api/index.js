@@ -3,6 +3,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
+dotenv.config();
 
 import UserRoutes from "./routes/UserRoutes.js"
 import YtLinksRoutes from "./routes/YtLinksRoutes.js"
@@ -10,12 +12,13 @@ import YtLinksRoutes from "./routes/YtLinksRoutes.js"
 // Defining the requirements
 const app = express();
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: [process.env.CORS_ORIGIN],
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
 }));
 app.use(express.json());
-dotenv.config();
+app.use(cookieParser())
 
 // Mongoose Connection
 mongoose.connect(process.env.MONGO_URL)
