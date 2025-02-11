@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 // interface FormData {
 //     username: string;
@@ -24,7 +25,7 @@ export default function SignUp() {
         e.preventDefault();
         try {
             setLoading(true);
-            const res = await fetch('http://localhost:3000/user/signUp', {
+            const res = await fetch(`${API_URL}/user/signUp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),

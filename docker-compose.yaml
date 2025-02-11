@@ -1,0 +1,45 @@
+services:
+  frontend:
+    # build: /client
+    container_name: frontend
+    image: ronil03/youtube-client:latest
+    ports:
+      - "5173:5173"
+    networks:
+      - youtubeurl
+    # env_file:
+    #   - ./client/.env.production
+    environment:
+      - VITE_API_URL=http://backend:3000
+  backend:
+    # build: /api
+    container_name: backend
+    image: ronil03/youtube-api:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - youtubeurl
+    depends_on:
+      - mongodb
+    # env_file:
+    #   - ./api/.env.production
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/testimonials
+      - CORS_ORIGIN=http://frontend:5173
+  mongodb:
+    image: ronil03/mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - youtubeurl
+    volumes:
+      - mongodb_data:/data/db
+
+networks:
+  youtubeurl:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local

@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function SignIn() {
 
@@ -20,11 +21,12 @@ export default function SignIn() {
         try {
             setLoading(true);
             setError("");
-            const res = await fetch("http://localhost:3000/user/signIn", {
+            const res = await fetch(`${API_URL}/user/signIn`, {
                 method: 'POST',
                 // it tell the server that the request body contains JSON data
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
+                credentials: 'include'
             })
 
             const data = await res.json();

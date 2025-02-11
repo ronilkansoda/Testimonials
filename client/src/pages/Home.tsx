@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import ImageAb from "../assets/abstract.jpg";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function MyComponent() {
     const [url, setUrl] = useState<any>(null);
@@ -19,7 +20,7 @@ export default function MyComponent() {
         setError("");
 
         try {
-            const res = await fetch("http://localhost:3000/ytLinks/links", {
+            const res = await fetch(`${API_URL}/ytLinks/links`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(inputData),
@@ -53,7 +54,7 @@ export default function MyComponent() {
         try {
             if (type === "video") {
                 // Fetch video file
-                const response = await fetch(`http://localhost:3000/ytLinks/download/${type}?source=${encodeURIComponent(sourceUrl)}&filename=${url.title}`); //ensures special characters in the URL (like ? or &) don’t break the request.
+                const response = await fetch(`${API_URL}/ytLinks/download/${type}?source=${encodeURIComponent(sourceUrl)}&filename=${url.title}`); //ensures special characters in the URL (like ? or &) don’t break the request.
 
                 if (!response.ok) {
                     throw new Error("Failed to download file");
