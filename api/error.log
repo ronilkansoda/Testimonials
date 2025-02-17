@@ -1,0 +1,50 @@
+
+{
+    "level": "info",
+    "message": "Processing video for URL: https://youtu.be/XB3L7vEG9Hs?si=EjX8rYuaEDV4uFLa",
+    "timestamp": "2025-02-12T10:17:51.842Z"
+}
+
+{
+    "level": "info",
+    "message": "Video processed successfully: Success   Free Footage  Videos for content creators",
+    "timestamp": "2025-02-12T10:18:00.760Z"
+}
+
+{
+    "level": "info",
+    "message": "Processing video for URL: https://youtu.be/XB3L7vEG9Hs?si=EjX8rYuaEDV4uFLa",
+    "timestamp": "2025-02-14T13:47:26.195Z"
+}
+
+{
+    "level": "info",
+    "message": "Video processed successfully: Success   Free Footage  Videos for content creators",
+    "timestamp": "2025-02-14T13:47:36.825Z"
+}
+
+{
+    "level": "info",
+    "message": "Processing video for URL: https://youtu.be/XB3L7vEG9Hs?si=EjX8rYuaEDV4uFLa",
+    "timestamp": "2025-02-14T13:50:23.536Z"
+}
+
+{
+    "level": "info",
+    "message": "Video processed successfully: Success   Free Footage  Videos for content creators",
+    "timestamp": "2025-02-14T13:50:28.659Z"
+}
+
+{
+    "level": "info",
+    "message": "Download requested: Success   Free Footage  Videos for content creators [Type: video]",
+    "timestamp": "2025-02-14T13:50:49.386Z"
+}
+
+{
+    "level": "info",
+    "message": "Streaming download started for \"Success   Free Footage  Videos for content creators\"",
+    "timestamp": "2025-02-14T13:50:49.770Z"
+}
+{"level":"info","message":"Processing video for URL: https://youtu.be/XB3L7vEG9Hs?si=EjX8rYuaEDV4uFLa","timestamp":"2025-02-17T05:05:19.327Z"}
+{"level":"info","message":"Video processed successfully: Success   Free Footage  Videos for content creators","timestamp":"2025-02-17T05:05:29.926Z"}

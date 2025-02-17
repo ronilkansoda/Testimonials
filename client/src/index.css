@@ -4,7 +4,75 @@
 
 
 .roboto-condensed :root {
-    /* font-family: "Roboto Condensed", serif; */
-    font-family: "Rubik", serif;
-    font-optical-sizing: auto;
-  } 
+  /* font-family: "Roboto Condensed", serif; */
+  font-family: "Rubik", serif;
+  font-optical-sizing: auto;
+}
+
+/* Custom Animations */
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-path {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(50px, -50px) rotate(90deg);
+  }
+
+  50% {
+    transform: translate(100px, 0) rotate(180deg);
+  }
+
+  75% {
+    transform: translate(50px, 50px) rotate(270deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+/* Animation Classes */
+.animate-gradient-x {
+  animation: gradient-x 6s ease infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-float-path {
+  animation: float-path 10s ease-in-out infinite;
+}
+
+.animate-float-path-delay-1 {
+  animation: float-path 10s ease-in-out infinite 2s;
+}
+
+.animate-float-path-delay-2 {
+  animation: float-path 10s ease-in-out infinite 4s;
+}

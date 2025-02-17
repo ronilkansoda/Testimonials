@@ -42,10 +42,10 @@ export const SignIn = async (req, res) => {
             error: "Wronge Password"
         });
         const accessToken = jwt.sign({ email: email }, "jwt-access-token-secret-key", { expiresIn: '1m' })
-        const refreshToken = jwt.sign({ email: email }, "jwt-refresh-token-secret-key", { expiresIn: '5m' })
+        const refreshToken = jwt.sign({ email: email }, "jwt-refresh-token-secret-key", { expiresIn: '2m' })
 
         res.cookie('accessToken', accessToken, { maxAge: 60000 })
-        res.cookie('refreshToken', refreshToken, { maxAge: 300000, httpOnly: true, secure: true})
+        res.cookie('refreshToken', refreshToken, { maxAge: 120000, httpOnly: true, secure: true})
 
         res.status(200).json({
             message: "SignIn Successfully"

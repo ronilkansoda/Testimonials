@@ -2,12 +2,29 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import ImageAb from "../assets/abstract.jpg";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function MyComponent() {
     const [url, setUrl] = useState<any>(null);
     const [inputData, setInputData] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<String>("");
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        axios.defaults.withCredentials = true
+        axios.get(`${API_URL}/home`)
+            .then(res => {
+                if (!res.data.valid) {
+                    navigate('/')
+                }
+            })
+            .catch(err => {
+                console.log("Home page ma error che." + err)
+                navigate("/"); 
+            })
+    }, [])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         setInputData({ ...inputData, [e.target.id]: e.target.value });
@@ -39,6 +56,8 @@ export default function MyComponent() {
             setLoading(false);
         }
     };
+
+
 
     useEffect(() => {
         console.log(url);
