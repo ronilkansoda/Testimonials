@@ -36,7 +36,7 @@ export const SignIn = async (req, res) => {
         if (!validUser) return res.status(404).json({
             error: "Email not Found"
         })
-        // console.log("**************************************************" + validUser)
+        // console.log("*************************************************" + validUser)
         const validPassword = bcrypt.compareSync(password, validUser.password);
         if (!validPassword) return res.status(404).json({
             error: "Wronge Password"
